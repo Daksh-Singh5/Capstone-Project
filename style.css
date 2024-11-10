@@ -36,10 +36,13 @@
   #nav-fixed{
     position:fixed;
     z-index: 40;
+    width:100% ;
   }
   .no-list-style-type{
     list-style-type: none;
   }
 
-
+#title2{
+  font-size: 40px;
+}
   
