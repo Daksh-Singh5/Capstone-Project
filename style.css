@@ -1,3 +1,45 @@
-h1{
-    text-align: center;
-}
+.agdasima-regular {
+    font-family: "Agdasima", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 40px;
+  }
+
+  .agdasima-regular2 {
+    font-family: "Agdasima", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 25px;
+  }
+  
+  .agdasima-bold {
+    font-family: "Agdasima", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 80px;
+  }
+
+  p{
+    font-family: "Agdasima", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 40px;
+  }
+
+  strong{
+    font-family: "Agdasima", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 80px;
+  }
+
+  #nav-fixed{
+    position:fixed;
+    z-index: 40;
+  }
+  .no-list-style-type{
+    list-style-type: none;
+  }
+
+
+  
