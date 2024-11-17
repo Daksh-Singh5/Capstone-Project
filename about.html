@@ -5,7 +5,13 @@
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <title>Document</title>
+<!-- link to google fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Agdasima:wght@400;700&display=swap" rel="stylesheet">
 
+<!-- link to font awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
  <!-- Link to Bootstrap CSS -->
  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -13,50 +19,65 @@
  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">About <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="index.html">Home</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </li>
-          </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
-        </div>
-      </nav>
+  <nav id="nav-fixed" class="navbar navbar-expand-lg navbar-light bg-light shadow-lg p-3 mb-5 bg-white rounded nav-bar">
+    <a class="navbar-brand" href="#"><b>AI:B<sup>2</sup> <i class="fa-solid fa-robot"></i></b>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="index.html">About <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Topics
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#creator">Creator<i class="fa-solid fa-question"></i></a>
+            <a class="dropdown-item" href="#teacher">teacher</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
 <br><br><br><br>
       <!-- tittle -->
 
       <div class="jumbotron jumbotron-fluid shadow-lg p-3 mb-5 rounded title3">
         <div class="container">
-          <h1 class="display-4 agdasima-bold">ALL About</h1>
-            </div>
+          <h1 class="display-4 agdasima-bold">All about</h1>
+        </div>
       </div>
+<h1 class="text-center container agdasima-bold" id="creator">Creator:Daksh Singh</h1>
+<br>
+<p class="container agdasima-regular">
+  Hey there! I'm <b>Daksh SIngh </b>, a <b>12-year-old</b> with a big passion for technology and artificial intelligence. I've taken my interest to the next level by building my own website all about AI! My goal is to make learning about artificial intelligence fun and accessible for everyone, whether you're a beginner or just curious about how AI works.
 
+  I got into AI by starting coding class (that's where i build my first AI), and I was hooked ever since. On my website, you’ll find almost every thing about AI from video to text everything.
+  
+  Aside from working on my site, I enjoy si-fi movies,chess,puzzles etc. These interests inspire me to think outside the box and make my AI projects even better.
+  
+  If you're curious about AI or just want to see what a 12-year-old tech enthusiast is up to, check out my website! I’m always up for connecting with other tech lovers or helping others get started on their own AI journeys.
+  
+  Let's explore the future of technology together!
+</p>
 
+<h1 class="text-center container agdasima-bold" id="teacher">Teacher:Sir, Shrey Mishra</h1>
+<br>
+<p class="container">
+  I want to give a special shoutout to my teacher, <b>Sir, Shrey Mishra</b>. They teach <b>computer science (Coding) at codingal</b> and have been a huge inspiration to me. Their classes are what sparked my interest in technology and helped me take my first steps into the world of AI.
 
+  Sir, Shrey Mishra makes learning so much fun by turning complicated topics into something we can all understand. Whether it's explaining how algorithms work or guiding us through building our first projects, they always encourage us to ask questions and think creatively. Thanks to their support, I felt confident enough to create my own website about AI!
 
+Besides being an awesome teacher, Sir, Shrey Mishra is super passionate about technology and loves seeing students bring their ideas to life. They’ve helped us explore projects that go way beyond what’s in the textbook and push us to use our knowledge in cool and practical ways.
+
+If you ever wonder how a 12-year-old like me could start a whole website about AI, it’s because I have a teacher like Sir, Shrey Mishra who believes in me and makes learning something I look forward to every day.
+</p>
 
 
 
