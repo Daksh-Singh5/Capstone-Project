@@ -73,3 +73,9 @@ background:#9ce9f3
 	padding: 0;
 	box-sizing: border-box;
 }
+
+.color{
+  background: linear-gradient(135deg, cyan, rgb(0, 76, 255));
+}
+
+}
