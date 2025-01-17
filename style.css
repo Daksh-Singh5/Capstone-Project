@@ -77,5 +77,32 @@ background:#9ce9f3
 .color{
   background: linear-gradient(135deg, cyan, rgb(0, 76, 255));
 }
+body {
+  font-family: 'Agdasima', sans-serif;
+  min-height: 100vh; /* Full height */
+  display: flex;
+  flex-direction: column;
+  margin: 0; /* Remove default margin */
+}
 
+.container {
+  flex: 1;
+}
+
+footer {
+  background-color: #343a40;
+  color: white;
+}
+
+footer a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+footer a:hover {
+  color: #17a2b8;
+}
+body{
+  background:#b2ebf2
 }
