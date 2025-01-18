@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Science Puzzle Game</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Agdasima:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <style>
+    body {
+      font-family: 'Agdasima', sans-serif;
+      background: #e3f2fd;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    .puzzle-container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 400px;
+      margin-bottom: 20px;
+    }
+
+    .puzzle-question {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+
+    .answer-input {
+      margin-bottom: 20px;
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .submit-btn {
+      padding: 10px 20px;
+      font-size: 1rem;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background: #0056b3;
+    }
+
+    .feedback {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+
+    .feedback.correct {
+      color: green;
+    }
+
+    .feedback.incorrect {
+      color: red;
+    }
+
+    .result {
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin-top: 20px;
+      color: #333;
+    }
+
+    .home-btn {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      background: #28a745;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
+    .home-btn:hover {
+      background: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="puzzle-container">
+    <h2>Science Puzzle Game</h2>
+    <p id="puzzleQuestion" class="puzzle-question"></p>
+    <input type="text" id="answerInput" class="answer-input" placeholder="Enter your answer">
+    <button id="submitBtn" class="submit-btn">Submit</button>
+    <div id="feedback" class="feedback"></div>
+    <p id="progress" class="progress"></p>
+    <div id="result" class="result"></div>
+  </div>
+
+  <!-- Home Button -->
+  <button id="homeBtn" class="home-btn">Go to Home</button>
+
+  <!-- JavaScript -->
+  <script>
+    // List of puzzles with questions and answers
+    const puzzles = [
+      { question: "I bond with hydrogen to make water. What am I?", answer: "oxygen" },
+      { question: "I’m the center of an atom. What am I?", answer: "nucleus" },
+      { question: "I’m the planet known as the Red Planet. What am I?", answer: "mars" },
+      { question: "I orbit the Earth and affect its tides. What am I?", answer: "moon" },
+      { question: "I’m the largest planet in our solar system. What am I?", answer: "jupiter" },
+      { question: "I’m the gas you breathe out. What am I?", answer: "carbon dioxide" },
+      { question: "I’m the smallest unit of life. What am I?", answer: "cell" },
+      { question: "I’m the force that keeps you grounded on Earth. What am I?", answer: "gravity" },
+      { question: "I’m the part of the plant that absorbs sunlight for food. What am I?", answer: "leaf" },
+      { question: "I’m the process plants use to make food from sunlight. What am I?", answer: "photosynthesis" }
+    ];
+
+    let currentPuzzleIndex = 0;
+    let score = 0;
+
+    // DOM Elements
+    const puzzleQuestionElement = document.getElementById("puzzleQuestion");
+    const answerInput = document.getElementById("answerInput");
+    const submitBtn = document.getElementById("submitBtn");
+    const feedback = document.getElementById("feedback");
+    const progress = document.getElementById("progress");
+    const result = document.getElementById("result");
+    const homeBtn = document.getElementById("homeBtn");
+
+    // Function to load a puzzle
+    function loadPuzzle() {
+      const currentPuzzle = puzzles[currentPuzzleIndex];
+      puzzleQuestionElement.textContent = currentPuzzle.question;
+      answerInput.value = "";
+      feedback.textContent = "";
+      progress.textContent = `Puzzle ${currentPuzzleIndex + 1} of ${puzzles.length}`;
+      result.textContent = "";
+    }
+
+    // Function to handle puzzle submission
+    submitBtn.addEventListener("click", () => {
+      const userAnswer = answerInput.value.trim().toLowerCase();
+      const currentPuzzle = puzzles[currentPuzzleIndex];
+
+      if (userAnswer === currentPuzzle.answer) {
+        feedback.textContent = "Correct! 🎉";
+        feedback.className = "feedback correct";
+        score++;
+      } else {
+        feedback.textContent = `Wrong! The correct answer was "${currentPuzzle.answer}".`;
+        feedback.className = "feedback incorrect";
+      }
+
+      currentPuzzleIndex++;
+
+      if (currentPuzzleIndex < puzzles.length) {
+        setTimeout(loadPuzzle, 2000); // Load next puzzle after a delay
+      } else {
+        // Game completed
+        result.textContent = `You’ve completed the game! Your score is ${score}/${puzzles.length}.`;
+        submitBtn.disabled = true;
+        answerInput.disabled = true;
+        homeBtn.style.display = "block"; // Show the Home button
+      }
+    });
+
+    // Redirect to Home
+    homeBtn.addEventListener("click", () => {
+      window.location.href = "home.html";
+    });
+
+    // Initialize the first puzzle
+    loadPuzzle();
+  </script>
+
+</body>
+</html>
