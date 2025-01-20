@@ -64,7 +64,7 @@
           <a class="nav-link active" href="contact.html">Contact</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="index.html">Home</a>
+          <a class="nav-link" href="home.html">Home</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="about.html">About</a>
@@ -82,25 +82,97 @@
   </nav>
 
   <!-- Form Section -->
-  <form class="container agdasima-regular">
-    <div class="mb-3">
-      <label for="emailInput" class="form-label">Write your email</label>
-      <input type="email" class="form-control" id="emailInput" placeholder="Here" required>
+  <form class="container agdasima-regular" id="reviewForm">
+    <div class="mb-3 text-center">
+      <label class="form-label display-4 text-primary">🌟 Rate Your Experience 🌟</label>
+      <div class="rating">
+        <input type="radio" id="star5" name="rating" value="5"><label for="star5" class="fa fa-star"></label>
+        <input type="radio" id="star4" name="rating" value="4"><label for="star4" class="fa fa-star"></label>
+        <input type="radio" id="star3" name="rating" value="3"><label for="star3" class="fa fa-star"></label>
+        <input type="radio" id="star2" name="rating" value="2"><label for="star2" class="fa fa-star"></label>
+        <input type="radio" id="star1" name="rating" value="1"><label for="star1" class="fa fa-star"></label>
+      </div>
     </div>
     <div class="mb-3">
-      <label for="subjectInput" class="form-label">Subject</label>
-      <input type="text" class="form-control" id="subjectInput" placeholder="Here" required>
+      <label for="nameInput" class="form-label">👤 Your Name</label>
+      <input type="text" class="form-control" id="nameInput" placeholder="Enter your name" required>
     </div>
     <div class="mb-3">
-      <label for="bodyTextarea" class="form-label">Body</label>
-      <textarea class="form-control" id="bodyTextarea" placeholder="Here" rows="3" required></textarea>
+      <label for="reviewText" class="form-label">📝 Share Your Thoughts</label>
+      <textarea class="form-control" id="reviewText" rows="3" placeholder="Tell us what you think..."></textarea>
     </div>
-    <div class="form-check mb-3">
-      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-      <label class="form-check-label" for="exampleCheck1">Check me out</label>
-    </div>
-    <button type="submit" class="btn btn-primary" onclick="sendAlert()">Submit</button>
+    <button type="submit" class="btn btn-success btn-lg w-100">🚀 Submit Review</button>
   </form>
+  
+  <div class="container mt-4">
+    <h3 class="text-center text-primary">📣 What People Are Saying</h3>
+    <ul id="reviewsList" class="list-group">
+      <!-- Reviews will be added here -->
+    </ul>
+  </div>
+  
+  <style>
+    .rating {
+      direction: rtl;
+      unicode-bidi: bidi-override;
+    }
+    .rating input {
+      display: none;
+    }
+    .rating label {
+      font-size: 2.5rem;
+      color: #ccc;
+      cursor: pointer;
+    }
+    .rating input:checked ~ label,
+    .rating label:hover,
+    .rating label:hover ~ label {
+      color: #f5c518;
+    }
+    .like-btn {
+      cursor: pointer;
+      color: #28a745;
+      margin-left: 10px;
+    }
+    .delete-btn {
+      cursor: pointer;
+      color: #dc3545;
+      margin-left: 10px;
+    }
+  </style>
+  
+  <script>
+    document.getElementById('reviewForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const rating = document.querySelector('input[name="rating"]:checked');
+      const reviewText = document.getElementById('reviewText').value;
+      const reviewerName = document.getElementById('nameInput').value;
+      if (rating && reviewText.trim() && reviewerName.trim()) {
+        const reviewItem = document.createElement('li');
+        reviewItem.classList.add('list-group-item');
+        reviewItem.innerHTML = `<strong>${reviewerName} (${rating.value} Stars):</strong> ${reviewText} 
+          <span class='like-btn' onclick='likeReview(this)'>👍 Like (0)</span>
+          <span class='delete-btn' onclick='deleteReview(this)'>❌ Delete</span>`;
+        document.getElementById('reviewsList').appendChild(reviewItem);
+        setTimeout(() => reviewItem.remove(), 2592000000); // Auto-delete after 30 days
+        alert('Thank you for your review!');
+        document.getElementById('reviewForm').reset();
+      } else {
+        alert('Please fill in all fields before submitting.');
+      }
+    });
+  
+    function likeReview(element) {
+      let likeCount = parseInt(element.textContent.match(/\d+/)[0]);
+      element.textContent = `👍 Like (${likeCount + 1})`;
+    }
+  
+    function deleteReview(element) {
+      element.parentElement.remove();
+    }
+  </script>
+  
+  
 
   <!-- Footer -->
   <footer class="text-center py-3">
