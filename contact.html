@@ -82,95 +82,124 @@
   </nav>
 
   <!-- Form Section -->
-  <form class="container agdasima-regular" id="reviewForm">
-    <div class="mb-3 text-center">
-      <label class="form-label display-4 text-primary">🌟 Rate Your Experience 🌟</label>
-      <div class="rating">
-        <input type="radio" id="star5" name="rating" value="5"><label for="star5" class="fa fa-star"></label>
-        <input type="radio" id="star4" name="rating" value="4"><label for="star4" class="fa fa-star"></label>
-        <input type="radio" id="star3" name="rating" value="3"><label for="star3" class="fa fa-star"></label>
-        <input type="radio" id="star2" name="rating" value="2"><label for="star2" class="fa fa-star"></label>
-        <input type="radio" id="star1" name="rating" value="1"><label for="star1" class="fa fa-star"></label>
+  <<div class="review-section">
+    <form class="container agdasima-regular" id="reviewForm">
+      <div class="mb-3 text-center">
+        <label class="form-label display-4 text-primary">🌟 Rate Your Experience 🌟</label>
+        <div class="rating">
+          <input type="radio" id="star5" name="rating" value="5"><label for="star5" class="fa fa-star"></label>
+          <input type="radio" id="star4" name="rating" value="4"><label for="star4" class="fa fa-star"></label>
+          <input type="radio" id="star3" name="rating" value="3"><label for="star3" class="fa fa-star"></label>
+          <input type="radio" id="star2" name="rating" value="2"><label for="star2" class="fa fa-star"></label>
+          <input type="radio" id="star1" name="rating" value="1"><label for="star1" class="fa fa-star"></label>
+        </div>
       </div>
+      <div class="mb-3">
+        <label for="nameInput" class="form-label">👤 Your Name</label>
+        <input type="text" class="form-control" id="nameInput" placeholder="Enter your name" required>
+      </div>
+      <div class="mb-3">
+        <label for="reviewText" class="form-label">📝 Share Your Thoughts</label>
+        <textarea class="form-control" id="reviewText" rows="3" placeholder="Tell us what you think..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-success btn-lg w-100">🚀 Submit Review</button>
+    </form>
+    
+    <div class="container mt-4">
+      <h3 class="text-center text-primary">📣 What People Are Saying</h3>
+      <ul id="reviewsList" class="list-group">
+        <!-- Reviews will be added here -->
+      </ul>
     </div>
-    <div class="mb-3">
-      <label for="nameInput" class="form-label">👤 Your Name</label>
-      <input type="text" class="form-control" id="nameInput" placeholder="Enter your name" required>
     </div>
-    <div class="mb-3">
-      <label for="reviewText" class="form-label">📝 Share Your Thoughts</label>
-      <textarea class="form-control" id="reviewText" rows="3" placeholder="Tell us what you think..."></textarea>
-    </div>
-    <button type="submit" class="btn btn-success btn-lg w-100">🚀 Submit Review</button>
-  </form>
-  
-  <div class="container mt-4">
-    <h3 class="text-center text-primary">📣 What People Are Saying</h3>
-    <ul id="reviewsList" class="list-group">
-      <!-- Reviews will be added here -->
-    </ul>
-  </div>
-  
-  <style>
-    .rating {
-      direction: rtl;
-      unicode-bidi: bidi-override;
-    }
-    .rating input {
-      display: none;
-    }
-    .rating label {
-      font-size: 2.5rem;
-      color: #ccc;
-      cursor: pointer;
-    }
-    .rating input:checked ~ label,
-    .rating label:hover,
-    .rating label:hover ~ label {
-      color: #f5c518;
-    }
-    .like-btn {
-      cursor: pointer;
-      color: #28a745;
-      margin-left: 10px;
-    }
-    .delete-btn {
-      cursor: pointer;
-      color: #dc3545;
-      margin-left: 10px;
-    }
-  </style>
-  
-  <script>
-    document.getElementById('reviewForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-      const rating = document.querySelector('input[name="rating"]:checked');
-      const reviewText = document.getElementById('reviewText').value;
-      const reviewerName = document.getElementById('nameInput').value;
-      if (rating && reviewText.trim() && reviewerName.trim()) {
-        const reviewItem = document.createElement('li');
-        reviewItem.classList.add('list-group-item');
-        reviewItem.innerHTML = `<strong>${reviewerName} (${rating.value} Stars):</strong> ${reviewText} 
-          <span class='like-btn' onclick='likeReview(this)'>👍 Like (0)</span>
-          <span class='delete-btn' onclick='deleteReview(this)'>❌ Delete</span>`;
-        document.getElementById('reviewsList').appendChild(reviewItem);
-        setTimeout(() => reviewItem.remove(), 2592000000); // Auto-delete after 30 days
-        alert('Thank you for your review!');
-        document.getElementById('reviewForm').reset();
-      } else {
-        alert('Please fill in all fields before submitting.');
+    
+    <style>
+      .review-section .rating {
+        direction: rtl;
+        unicode-bidi: bidi-override;
       }
-    });
+      .review-section .rating input {
+        display: none;
+      }
+      .review-section .rating label {
+        font-size: 2.5rem;
+        color: #ccc;
+        cursor: pointer;
+      }
+      .review-section .rating input:checked ~ label,
+      .review-section .rating label:hover,
+      .review-section .rating label:hover ~ label {
+        color: #f5c518;
+      }
+      .review-section .like-btn {
+        cursor: pointer;
+        color: #28a745;
+        margin-left: 10px;
+      }
+      .review-section .delete-btn {
+        cursor: pointer;
+        color: #dc3545;
+        margin-left: 10px;
+      }
+    </style>
+    
+    <script>
+      document.getElementById('reviewForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const rating = document.querySelector('input[name="rating"]:checked');
+        const reviewText = document.getElementById('reviewText').value;
+        const reviewerName = document.getElementById('nameInput').value;
+    
+        if (rating && reviewText.trim() && reviewerName.trim()) {
+          const reviewData = {
+            name: reviewerName,
+            stars: rating.value,
+            text: reviewText,
+            timestamp: new Date().getTime()
+          };
+          let reviews = JSON.parse(localStorage.getItem('reviewsList')) || [];
+          reviews.push(reviewData);
+          localStorage.setItem('reviewsList', JSON.stringify(reviews));
+          displayReviews();
+          alert('Thank you for your review!');
+          document.getElementById('reviewForm').reset();
+        } else {
+          alert('Please fill in all fields before submitting.');
+        }
+      });
+    
+      function displayReviews() {
+        const reviewsList = document.getElementById('reviewsList');
+        reviewsList.innerHTML = '';
+        let reviews = JSON.parse(localStorage.getItem('reviewsList')) || [];
+        reviews = reviews.filter(review => (new Date().getTime() - review.timestamp) < 2592000000);
+        localStorage.setItem('reviewsList', JSON.stringify(reviews));
+        reviews.forEach((review, index) => {
+          const reviewItem = document.createElement('li');
+          reviewItem.classList.add('list-group-item');
+          reviewItem.innerHTML = `<strong>${review.name} (${review.stars} Stars):</strong> ${review.text} 
+            <span class='like-btn' onclick='likeReview(this)'>👍 Like (0)</span>
+            <span class='delete-btn' onclick='deleteReview(${index})'>❌ Delete</span>`;
+          reviewsList.appendChild(reviewItem);
+        });
+      }
+    
+      function likeReview(element) {
+        let likeCount = parseInt(element.textContent.match(/\d+/)[0]);
+        element.textContent = `👍 Like (${likeCount + 1})`;
+      }
+    
+      function deleteReview(index) {
+        let reviews = JSON.parse(localStorage.getItem('reviewsList')) || [];
+        reviews.splice(index, 1);
+        localStorage.setItem('reviewsList', JSON.stringify(reviews));
+        displayReviews();
+      }
+    
+      document.addEventListener('DOMContentLoaded', displayReviews);
+    </script>
+    
   
-    function likeReview(element) {
-      let likeCount = parseInt(element.textContent.match(/\d+/)[0]);
-      element.textContent = `👍 Like (${likeCount + 1})`;
-    }
-  
-    function deleteReview(element) {
-      element.parentElement.remove();
-    }
-  </script>
   
   
 
