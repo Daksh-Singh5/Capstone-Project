@@ -82,7 +82,7 @@
   </nav>
 
   <!-- Form Section -->
-  <<div class="review-section">
+  <div class="review-section">
     <form class="container agdasima-regular" id="reviewForm">
       <div class="mb-3 text-center">
         <label class="form-label display-4 text-primary">🌟 Rate Your Experience 🌟</label>
@@ -172,7 +172,8 @@
         const reviewsList = document.getElementById('reviewsList');
         reviewsList.innerHTML = '';
         let reviews = JSON.parse(localStorage.getItem('reviewsList')) || [];
-        reviews = reviews.filter(review => (new Date().getTime() - review.timestamp) < 2592000000);
+        const currentTime = new Date().getTime();
+        reviews = reviews.filter(review => currentTime - review.timestamp < 2592000000);
         localStorage.setItem('reviewsList', JSON.stringify(reviews));
         reviews.forEach((review, index) => {
           const reviewItem = document.createElement('li');
