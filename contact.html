@@ -240,39 +240,146 @@
     </ul>
   </footer>
 
-  <script>
-    // Retrieve the user's name from localStorage
-    const userName = localStorage.getItem('name');
+  <script type="module">
+    // Import Firebase core functions
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
   
-    // References to elements
-    const userNameElement = document.getElementById('userName');
-    const logoutButton = document.getElementById('logoutButton');
+    // Your Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyB2x-ckS2l6tu3GOxiPt0dF6lfQj_ec2Kw",
+      authDomain: "capstone-project-4f7bb.firebaseapp.com",
+      projectId: "capstone-project-4f7bb",
+      storageBucket: "capstone-project-4f7bb.appspot.com",
+      messagingSenderId: "1020927738500",
+      appId: "1:1020927738500:web:f4a94aa37a1c27a8aab8d1",
+      measurementId: "G-BH96PTL2S7"
+    };
   
-    // Check if the name exists in localStorage
-    if (userName) {
-      // Display the user's name and show the log out button
-      userNameElement.textContent = `Hi, ${userName}!`;
-      logoutButton.style.display = 'inline-block';
-    } else {
-      // Ensure the log out button is hidden if no user is logged in
-      userNameElement.textContent = '';
-      logoutButton.style.display = 'none';
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+  
+    // Function to add review to Firestore
+    async function submitReviewToFirestore(name, stars, text) {
+      try {
+        await addDoc(collection(db, "reviews"), {
+          name: name,
+          stars: stars,
+          text: text,
+          timestamp: new Date().toISOString()
+        });
+        alert('Review submitted successfully!');
+        displayReviewsFromFirestore();
+      } catch (error) {
+        console.error("Error adding review: ", error);
+      }
     }
   
-    // Log out functionality
-    logoutButton.addEventListener('click', function () {
-      // Clear all user-related data from localStorage
-      localStorage.removeItem('name'); // Remove the name
-      localStorage.removeItem('favoriteColor'); // Remove the favorite color
-      localStorage.removeItem('funFact'); // Remove the fun fact
+    // Function to fetch reviews from Firestore
+    async function displayReviewsFromFirestore() {
+      const querySnapshot = await getDocs(collection(db, "reviews"));
+      const reviewsList = document.getElementById('reviewsList');
+      reviewsList.innerHTML = ''; // Clear previous entries
+      querySnapshot.forEach((doc) => {
+        const review = doc.data();
+        const reviewItem = `
+          <li class="list-group-item review-item">
+            <div class="review-header">⭐ ${'★'.repeat(review.stars)} ${'☆'.repeat(5 - review.stars)} ${review.name}</div>
+            <div class="review-meta">${new Date(review.timestamp).toLocaleDateString()}</div>
+            <div class="review-text">${review.text}</div>
+          </li>`;
+        reviewsList.innerHTML += reviewItem;
+      });
+    }
   
-      // Reload the page to update the UI
-      window.location.reload();
-      window.location.href = 'index.html';
+    // Call the function to display reviews when page loads
+    document.addEventListener('DOMContentLoaded', displayReviewsFromFirestore);
+  
+    // Handle form submission
+    document.getElementById('reviewForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const rating = document.querySelector('input[name="rating"]:checked');
+      const reviewText = document.getElementById('reviewText').value;
+      const reviewerName = document.getElementById('nameInput').value;
+  
+      if (rating && reviewText.trim() && reviewerName.trim()) {
+        submitReviewToFirestore(reviewerName, rating.value, reviewText);
+        document.getElementById('reviewForm').reset();
+      } else {
+        alert('Please fill in all fields before submitting.');
+      }
     });
+  
+    // Firebase Authentication (Sign Up)
+    async function registerUser(email, password) {
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        alert(`User registered: ${userCredential.user.email}`);
+      } catch (error) {
+        console.error("Error signing up: ", error);
+        alert(error.message);
+      }
+    }
+  
+    // Firebase Authentication (Sign In)
+    async function loginUser(email, password) {
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        alert(`Welcome, ${userCredential.user.email}`);
+        localStorage.setItem('name', userCredential.user.email);
+      } catch (error) {
+        console.error("Error signing in: ", error);
+        alert(error.message);
+      }
+    }
+  
+    // Firebase Authentication (Sign Out)
+    async function logoutUser() {
+      try {
+        await signOut(auth);
+        alert('You have been logged out.');
+        localStorage.removeItem('name');
+        window.location.reload();
+      } catch (error) {
+        console.error("Error signing out: ", error);
+      }
+    }
+  
+    // Attach logout function to button
+    document.getElementById('logoutButton').addEventListener('click', logoutUser);
+  
   </script>
+  
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- fire base -->
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyB2x-ckS2l6tu3GOxiPt0dF6lfQj_ec2Kw",
+      authDomain: "capstone-project-4f7bb.firebaseapp.com",
+      projectId: "capstone-project-4f7bb",
+      storageBucket: "capstone-project-4f7bb.firebasestorage.app",
+      messagingSenderId: "1020927738500",
+      appId: "1:1020927738500:web:f4a94aa37a1c27a8aab8d1",
+      measurementId: "G-BH96PTL2S7"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
 </body>
 </html>
