@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact - AI:B²</title>
-  
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,10 +20,11 @@
   <style>
     body {
       font-family: 'Agdasima', sans-serif;
-      min-height: 100vh; /* Full height */
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      margin: 0; /* Remove default margin */
+      margin: 0;
+      background: #b2ebf2;
     }
 
     .container {
@@ -44,17 +45,78 @@
     footer a:hover {
       color: #17a2b8;
     }
-    body{
-      background:#b2ebf2
+
+    .navbar-text {
+      font-size: 1rem;
+      color: #343a40;
+    }
+
+    .review-section .rating {
+      direction: rtl;
+      unicode-bidi: bidi-override;
+    }
+
+    .review-section .rating input {
+      display: none;
+    }
+
+    .review-section .rating label {
+      font-size: 1.8rem;
+      color: #ccc;
+      cursor: pointer;
+    }
+
+    .review-section .rating input:checked ~ label,
+    .review-section .rating label:hover,
+    .review-section .rating label:hover ~ label {
+      color: #f5c518;
+    }
+
+    .review-item {
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 15px;
+      margin-bottom: 15px;
+    }
+
+    .review-header {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .review-text {
+      font-size: 1rem;
+      margin-top: 5px;
+    }
+
+    .review-meta {
+      font-size: 0.9rem;
+      color: gray;
+    }
+
+    .review-actions {
+      text-align: right;
+      margin-top: 10px;
+    }
+
+    .like-btn, 
+    .delete-btn {
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    .like-btn {
+      color: #28a745;
+    }
+
+    .delete-btn {
+      color: #dc3545;
     }
   </style>
 </head>
 <body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-lg p-3 mb-5 bg-white rounded nav-bar">
-    <a class="navbar-brand" href="#">
-      <b>AI:B<sup>2</sup> <i class="fa-solid fa-robot"></i></b>
-    </a>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-lg p-3 mb-5 bg-white rounded">
+    <a class="navbar-brand" href="#">AI:B<sup>2</sup> <i class="fa-solid fa-robot"></i></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -73,17 +135,14 @@
           <a class="nav-link" href="quiz.html">Play a quiz</a>
         </li>
       </ul>
-            <!-- Placeholder for the user's name -->
-            <span id="userName" class="navbar-text ml-auto me-3"></span>
-            <br>
-            <!-- Log Out Button -->
-            <button id="logoutButton" class="btn btn-outline-danger btn-sm" style="display: none;">Log Out</button>
+      <span id="userName" class="navbar-text ml-auto me-3"></span>
+      <button id="logoutButton" class="btn btn-outline-danger btn-sm" style="display: none;">Log Out</button>
     </div>
   </nav>
 
-  <!-- Form Section -->
+  <!-- Review Section -->
   <div class="review-section">
-    <form class="container agdasima-regular" id="reviewForm">
+    <form class="container" id="reviewForm">
       <div class="mb-3 text-center">
         <label class="form-label display-4 text-primary">🌟 Rate Your Experience 🌟</label>
         <div class="rating">
@@ -104,135 +163,13 @@
       </div>
       <button type="submit" class="btn btn-success btn-lg w-100">🚀 Submit Review</button>
     </form>
-  
+
     <div class="container mt-4">
       <h3 class="text-center text-primary">📣 What People Are Saying</h3>
-      <ul id="reviewsList" class="list-group">
-        <!-- Reviews will be added here -->
-      </ul>
+      <ul id="reviewsList" class="list-group"></ul>
     </div>
   </div>
-  
-  <style>
-    .review-section .rating {
-      direction: rtl;
-      unicode-bidi: bidi-override;
-    }
-    .review-section .rating input {
-      display: none;
-    }
-    .review-section .rating label {
-      font-size: 1.8rem;
-      color: #ccc;
-      cursor: pointer;
-    }
-    .review-section .rating input:checked ~ label,
-    .review-section .rating label:hover,
-    .review-section .rating label:hover ~ label {
-      color: #f5c518;
-    }
-    .review-section .review-item {
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 15px;
-      margin-bottom: 15px;
-    }
-    .review-section .review-header {
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
-    .review-section .review-text {
-      font-size: 1rem;
-      margin-top: 5px;
-    }
-    .review-section .review-meta {
-      font-size: 0.9rem;
-      color: gray;
-    }
-    .review-section .review-actions {
-      text-align: right;
-      margin-top: 10px;
-    }
-    .review-section .like-btn, 
-    .review-section .delete-btn {
-      cursor: pointer;
-      margin-left: 10px;
-    }
-    .review-section .like-btn {
-      color: #28a745;
-    }
-    .review-section .delete-btn {
-      color: #dc3545;
-    }
-  </style>
-  
-  <script>
-    document.getElementById('reviewForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-      const rating = document.querySelector('input[name="rating"]:checked');
-      const reviewText = document.getElementById('reviewText').value;
-      const reviewerName = document.getElementById('nameInput').value;
-  
-      if (rating && reviewText.trim() && reviewerName.trim()) {
-        const reviewData = {
-          name: reviewerName,
-          stars: rating.value,
-          text: reviewText,
-          timestamp: new Date().getTime()
-        };
-        let reviews = JSON.parse(localStorage.getItem('reviewsList')) || [];
-        reviews.push(reviewData);
-        localStorage.setItem('reviewsList', JSON.stringify(reviews));
-        displayReviews();
-        alert('Thank you for your review!');
-        document.getElementById('reviewForm').reset();
-      } else {
-        alert('Please fill in all fields before submitting.');
-      }
-    });
-  
-    function displayReviews() {
-      const reviewsList = document.getElementById('reviewsList');
-      reviewsList.innerHTML = '';
-      let reviews = JSON.parse(localStorage.getItem('reviewsList')) || [];
-      const currentTime = new Date().getTime();
-      reviews = reviews.filter(review => currentTime - review.timestamp < 2592000000);
-      localStorage.setItem('reviewsList', JSON.stringify(reviews));
-      reviews.forEach((review, index) => {
-        const reviewItem = document.createElement('li');
-        reviewItem.classList.add('list-group-item', 'review-item');
-        reviewItem.innerHTML = `
-          <div class="review-header">⭐ ${'★'.repeat(review.stars)} ${'☆'.repeat(5 - review.stars)} ${review.name}</div>
-          <div class="review-meta">${new Date(review.timestamp).toLocaleDateString()}</div>
-          <div class="review-text">${review.text}</div>
-          <div class="review-actions">
-            <span class='like-btn' onclick='likeReview(this)'>👍 Like (0)</span>
-            <span class='delete-btn' onclick='deleteReview(${index})'>❌ Delete</span>
-          </div>`;
-        reviewsList.appendChild(reviewItem);
-      });
-    }
-  
-    function likeReview(element) {
-      let likeCount = parseInt(element.textContent.match(/\d+/)[0]);
-      element.textContent = `👍 Like (${likeCount + 1})`;
-    }
-  
-    function deleteReview(index) {
-      let reviews = JSON.parse(localStorage.getItem('reviewsList')) || [];
-      reviews.splice(index, 1);
-      localStorage.setItem('reviewsList', JSON.stringify(reviews));
-      displayReviews();
-    }
-  
-    document.addEventListener('DOMContentLoaded', displayReviews);
-  </script>
-  
-    
-  
-  
-  
 
-  <!-- Footer -->
   <footer class="text-center py-3">
     <p>Created by Daksh Singh &copy; 2025</p>
     <ul class="list-inline">
@@ -240,13 +177,12 @@
     </ul>
   </footer>
 
+  <!-- Firebase Script -->
   <script type="module">
-    // Import Firebase core functions
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
     import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-  
-    // Your Firebase configuration
+    import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+
     const firebaseConfig = {
       apiKey: "AIzaSyB2x-ckS2l6tu3GOxiPt0dF6lfQj_ec2Kw",
       authDomain: "capstone-project-4f7bb.firebaseapp.com",
@@ -256,13 +192,45 @@
       appId: "1:1020927738500:web:f4a94aa37a1c27a8aab8d1",
       measurementId: "G-BH96PTL2S7"
     };
-  
-    // Initialize Firebase
+
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const auth = getAuth(app);
-  
-    // Function to add review to Firestore
+
+    // Handle user state (login/logout)
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        document.getElementById('userName').textContent = `Welcome, ${user.email}`;
+        document.getElementById('logoutButton').style.display = 'inline-block';
+      } else {
+        document.getElementById('userName').textContent = '';
+        document.getElementById('logoutButton').style.display = 'none';
+      }
+    });
+
+    // Sign in function
+    async function loginUser(email, password) {
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        alert(`Welcome, ${userCredential.user.email}`);
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+
+    // Logout function
+    async function logoutUser() {
+      try {
+        await signOut(auth);
+        alert('You have been logged out.');
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+
+    document.getElementById('logoutButton').addEventListener('click', logoutUser);
+
+    // Submit review to Firestore
     async function submitReviewToFirestore(name, stars, text) {
       try {
         await addDoc(collection(db, "reviews"), {
@@ -271,19 +239,18 @@
           text: text,
           timestamp: new Date().toISOString()
         });
-        alert('Review submitted successfully!');
         displayReviewsFromFirestore();
       } catch (error) {
         console.error("Error adding review: ", error);
       }
     }
-  
-    // Function to fetch reviews from Firestore
+
+    // Display reviews from Firestore
     async function displayReviewsFromFirestore() {
       const querySnapshot = await getDocs(collection(db, "reviews"));
       const reviewsList = document.getElementById('reviewsList');
-      reviewsList.innerHTML = ''; // Clear previous entries
-      querySnapshot.forEach((doc) => {
+      reviewsList.innerHTML = '';
+      querySnapshot.forEach(doc => {
         const review = doc.data();
         const reviewItem = `
           <li class="list-group-item review-item">
@@ -294,17 +261,14 @@
         reviewsList.innerHTML += reviewItem;
       });
     }
-  
-    // Call the function to display reviews when page loads
-    document.addEventListener('DOMContentLoaded', displayReviewsFromFirestore);
-  
+
     // Handle form submission
     document.getElementById('reviewForm').addEventListener('submit', function(event) {
       event.preventDefault();
       const rating = document.querySelector('input[name="rating"]:checked');
       const reviewText = document.getElementById('reviewText').value;
       const reviewerName = document.getElementById('nameInput').value;
-  
+
       if (rating && reviewText.trim() && reviewerName.trim()) {
         submitReviewToFirestore(reviewerName, rating.value, reviewText);
         document.getElementById('reviewForm').reset();
@@ -312,74 +276,12 @@
         alert('Please fill in all fields before submitting.');
       }
     });
-  
-    // Firebase Authentication (Sign Up)
-    async function registerUser(email, password) {
-      try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        alert(`User registered: ${userCredential.user.email}`);
-      } catch (error) {
-        console.error("Error signing up: ", error);
-        alert(error.message);
-      }
-    }
-  
-    // Firebase Authentication (Sign In)
-    async function loginUser(email, password) {
-      try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        alert(`Welcome, ${userCredential.user.email}`);
-        localStorage.setItem('name', userCredential.user.email);
-      } catch (error) {
-        console.error("Error signing in: ", error);
-        alert(error.message);
-      }
-    }
-  
-    // Firebase Authentication (Sign Out)
-    async function logoutUser() {
-      try {
-        await signOut(auth);
-        alert('You have been logged out.');
-        localStorage.removeItem('name');
-        window.location.reload();
-      } catch (error) {
-        console.error("Error signing out: ", error);
-      }
-    }
-  
-    // Attach logout function to button
-    document.getElementById('logoutButton').addEventListener('click', logoutUser);
-  
+
+    // Fetch and display reviews on page load
+    document.addEventListener('DOMContentLoaded', displayReviewsFromFirestore);
   </script>
-  
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- fire base -->
-  <script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-analytics.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-  
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-      apiKey: "AIzaSyB2x-ckS2l6tu3GOxiPt0dF6lfQj_ec2Kw",
-      authDomain: "capstone-project-4f7bb.firebaseapp.com",
-      projectId: "capstone-project-4f7bb",
-      storageBucket: "capstone-project-4f7bb.firebasestorage.app",
-      messagingSenderId: "1020927738500",
-      appId: "1:1020927738500:web:f4a94aa37a1c27a8aab8d1",
-      measurementId: "G-BH96PTL2S7"
-    };
-  
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-  </script>
 </body>
 </html>
